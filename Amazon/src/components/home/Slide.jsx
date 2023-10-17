@@ -20,11 +20,11 @@ const responsive = {
     }
   };
 
-const Slide = () => {
+const Slide = ({title}) => {
   return (
     <div className='products_section'>
         <div className="products_deal">
-            <h3>Deal of The Day</h3>
+            <h3>{title}</h3>
             <button className='view_btn'>View All</button>
         </div>
         <Divider/>
@@ -47,7 +47,7 @@ const Slide = () => {
             {
                 products.map((product) => {
                     return (
-                        <div className="products_items">
+                        <div className="products_items" key={product.id}>
                             <div className="product_img">
                                 <img src={product.url} alt="" />
                             </div>
