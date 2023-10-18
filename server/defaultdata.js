@@ -9,7 +9,7 @@ const DefaultData = async () => {
       // Insert data from the "productsdata" array into the "Products" collection
       const storeData = await Products.insertMany(productsdata);
   
-      console.log(storeData);
+    //   console.log(storeData);
     } catch (error) {
       console.log('Error in inserting data', error);
     }
