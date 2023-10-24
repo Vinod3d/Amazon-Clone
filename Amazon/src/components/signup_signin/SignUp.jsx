@@ -17,6 +17,28 @@ const SignUp = () => {
         setUdata({...udata,[name]:value})
     }
 
+
+    const senddata = async(e)=>{
+        e.preventDefault();
+
+        const { name, email, mobile, password, cpassword } = udata;
+
+        const res = await fetch(`/register`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name, email, mobile, password, cpassword
+            })
+        });
+
+        const data = await res.json();
+        // console.log(data);
+    }
+
+    // senddata();
+
   return (
     <section>
             <div className="sign_container">
@@ -47,7 +69,7 @@ const SignUp = () => {
                             <label htmlFor="cpassword">Confirm Password</label>
                             <input type="password" name="cpassword" id="cpassword"  value={udata.cpassword} onChange={adddata}/>
                         </div>
-                        <button type="submit" className="signin_btn" >Continue</button>
+                        <button type="submit" className="signin_btn" onClick={senddata}>Continue</button>
 
                         <div className="signin_info">
                             <p>Already have an account</p>

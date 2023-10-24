@@ -1,6 +1,7 @@
 const express = require("express");
 const router = new express.Router();
 const Products = require("../models/productsSchema");
+const USER = require("../models/userSchema");
 
 //get products api 
 router.get("/getproducts", async (req, res)=>{
@@ -32,5 +33,41 @@ router.get("/getproductsone/:id", async(req, res)=>{
     }
 })
 
+//Register data
+router.post("/register", async(req, res)=>{
+    // console.log(req.body);
+
+    const {fname, email, mobile, password, cpassword} = req.body;
+
+    if(!fname || !email || !mobile || !password || !cpassword){
+        res.status(422).json({error:"fill all data"});
+        console.log("not data available");
+    };
+
+    try{
+        const preuser = await USER.findOne({email:email});
+
+        if(preuser){
+            res.status(422).json({error:"this user is already present"})
+        } else if(password !== cpassword){
+            res.status(422).json({error : "password and cpassword not match"})
+        }else{
+            const finalUser = new USER ({
+                fname, email, mobile, password, cpassword
+            });
+
+            const storedata = await finalUser.save();
+            console.log(storedata);
+
+            res.status(201).json(storedata);
+        }
+    }
+
+    catch(error){
+        console.log(error);
+    }
+
+
+})
 
 module.exports = router;
